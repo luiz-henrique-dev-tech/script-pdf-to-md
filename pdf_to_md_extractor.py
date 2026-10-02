@@ -5,13 +5,12 @@ from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload
 import io
 import pymupdf4llm
 
-# Autenticação no Google Drive
 auth.authenticate_user()
 drive_service = build('drive', 'v3')
 
-SOURCE_FOLDER_ID = 'COLE_AQUI_O_ID_DA_PASTA_DE_ORIGEM'
-DESTINATION_FOLDER_ID = 'COLE_AQUI_O_ID_DA_PASTA_DE_DESTINO'
-LAST_FILES = ['nome_do_arquivo_1.pdf', 'nome_do_arquivo_2.pdf']
+SOURCE_FOLDER_ID = 'colar_aqui_o_id_da_pasta_de_origem'
+DESTINATION_FOLDER_ID = 'colar_aqui_o_id_da_pasta_de_destino'
+LAST_FILES = ['arquivos_que_deve_ser_o_penultimo.pdf', 'arquivo_que_deve_ser_o_ultimo.pdf']
 
 def get_files_in_folder(folder_id):
     query = f"'{folder_id}' in parents and mimeType='application/pdf' and trashed=false"
@@ -32,7 +31,7 @@ def extract_text_to_md_advanced(pdf_filename, md_filename):
     try:
         md_text = pymupdf4llm.to_markdown(pdf_filename)
         if not md_text.strip():
-            md_text = "> [AVISO DA IA] Este arquivo parece ser uma imagem escaneada. Não foi possível extrair texto diretamente via PyMuPDF.\n\n"
+            md_text = "> Este arquivo parece ser uma imagem escaneada. Não foi possível extrair texto diretamente via PyMuPDF.\n\n"
         with open(md_filename, 'w', encoding='utf-8') as f:
             f.write(md_text)
     except Exception as e:
